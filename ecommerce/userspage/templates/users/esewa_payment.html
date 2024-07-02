@@ -1,0 +1,63 @@
+{% extends 'layouts.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+<title>eSewa Payment</title>
+{% endblock %}
+
+{% block main_content %}
+{% include 'users/header.html' %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center">
+                <h1>
+                    You are being redirect to Esewa, please Wait....
+                </h1>
+
+                <div class="card" style="display:none">
+                   
+                    <form action="https://uat.esewa.com.np/epay/main" method="POST" id="esewa_form">
+                        <input value="{{order.total_price}}" name="tAmt" type="hidden">
+                        <input value="{{order.total_price}}" name="amt" type="hidden">
+                        <input value="0" name="txAmt" type="hidden">
+                        <input value="0" name="psc" type="hidden">
+                        <input value="0" name="pdc" type="hidden">
+                        <input value="EPAYTEST" name="scd" type="hidden">
+                        <input value="{{order.id}}_{{cart.id}}" name="pid" type="hidden">
+                        <input value="http://127.0.0.1:8000/esewa_verify" type="hidden" name="su">
+                        <input value="{{request.build_absolute_uri}}" type="hidden" name="fu">
+                        <input value="Submit" type="submit">
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        setTimeout(function () {
+            document.getElementById('esewa_form').submit()
+
+        }, 1000)
+
+
+    </script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1
+/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1
+/hmac-sha256.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1
+/enc-base64.min.js"></script>
+    <script>
+        var hash = CryptoJS.HmacSHA256("Message", "secret");
+        var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+        document.write(hashInBase64);
+        document.getElementById('signature').setAttribute("value", hashInBase64)
+    </script> -->
+
+    {% endblock %}
